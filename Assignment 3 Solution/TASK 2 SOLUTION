@@ -1,0 +1,51 @@
+#include <iostream>
+#include <string>
+using namespace std;
+struct FeetInches {
+    int feet;
+    int inches;
+};
+struct RoomDimension {
+    FeetInches length;
+    FeetInches Width;
+};
+double computeTheCarpetingCost(const RoomDimension& room, double price) {
+    double l = room.length.feet + (static_cast<double>(room.length.inches) / 12.0);
+    double w = room.Width.feet + (static_cast<double>(room.Width.inches) / 12.0);
+    return l * w * price;
+}
+int main() {
+    int n;
+    cout << "Enter numper of rooms: "; 
+    cin >> n;
+    RoomDimension* rooms = new RoomDimension[n];
+    double price;
+    cout << "Enter price per sqare foot: ";
+    cin >> price;
+    for (int i = 0; i < n; i++) {
+        cout << "\nRoom " << i + 1 << " Lenght (feet inches): "; 
+        cin >> rooms[i].length.feet >> rooms[i].length.inches;
+        cout << "Room " << i + 1 << " Width (feet inches): ";
+        cin >> rooms[i].Width.feet >> rooms[i].Width.inches;
+    }
+    int choice;
+    do {
+        cout << "\n1. Cost of each room\n2. Total cost\n3. Exit\nChoise: "; 
+        cin >> choice;
+        if (choice == 1) {
+            for (int i = 0; i < n; i++) {
+                double c = computeTheCarpetingCost(rooms[i], price);
+                cout << "Room " << i + 1 << " cost: " << c << endl;
+            }
+        } 
+        else if (choice == 2) {
+            double total = 0;
+            for (int i = 0; i < n; i++) {
+                total += computeTheCarpetingCost(rooms[i], price);
+            }
+            cout << "Total house cost: " << total << endl;
+        }
+    } while (choice != 3);
+    delete[] rooms;
+    return 0;
+}
