@@ -1,0 +1,100 @@
+
+#include <iostream>
+#include <string>
+using namespace std;
+int findMin(int inArray[], const int size)
+{
+    int minimum = inArray[0];
+    for (int i = 1; i < size; i++)
+    {
+        if (inArray[i] < minimum)
+        {
+            minimum = inArray[i];
+        }
+    }
+    return minimum;
+}
+int findMax(int inArray[], const int size)
+{
+    int maximum = inArray[0];
+    for (int i = 1; i < size; i++)
+    {
+        if (inArray[i] > maximum)
+        {
+            maximum = inArray[i];
+        }
+    }
+    return maximum;
+}
+int computeAverage(int inArray[], const int size)
+{
+    int sum = 0;
+    for (int i = 0; i < size; i++)
+    {
+        sum += inArray[i];
+    }
+    return sum / size;
+}
+int computeMedian(int inArray[], const int size)
+{
+    int* sortedArray = new int[size];
+
+    // Copy original array
+    for (int i = 0; i < size; i++)
+    {
+        sortedArray[i] = inArray[i];
+    }
+    for (int i = 0; i < size - 1; i++)
+    {
+        for (int j = 0; j < size - i - 1; j++)
+        {
+            if (sortedArray[j] > sortedArray[j + 1])
+            {
+                int temp = sortedArray[j];
+                sortedArray[j] = sortedArray[j + 1];
+                sortedArray[j + 1] = temp;
+            }
+        }
+    }
+    int median;
+    if (size % 2 == 1)
+    {
+        median = sortedArray[size / 2];
+    }
+    else
+    {
+        median = (sortedArray[size / 2 - 1]
+                  + sortedArray[size / 2]) / 2;
+    }
+    delete[] sortedArray;
+    return median;
+}
+
+int main()
+{
+    int size;
+    cout << "Enter number of students: ";
+    cin >> size;
+    if (size <= 0)
+    {
+        cout << "Invalid number of students!" << endl;
+        return 0;
+    }
+    int* grades = new int[size];
+    cout << "Enter student grades:" << endl;
+    for (int i = 0; i < size; i++)
+    {
+        cin >> grades[i];
+        while (grades[i] < 0)
+        {
+            cout << "Negative grades are not allowed. Enter again: ";
+            cin >> grades[i];
+        }
+    }
+    cout << "Minimum: " << findMin(grades, size) << endl;
+    cout << "Maximum: " << findMax(grades, size) << endl;
+    cout << "Average: " << computeAverage(grades, size) << endl;
+    cout << "Median: " << computeMedian(grades, size) << endl;
+    delete[] grades;
+    return 0;
+}
