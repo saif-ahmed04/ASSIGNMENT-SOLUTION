@@ -1,0 +1,43 @@
+#include <iostream>
+#include <string>
+using namespace std;
+struct InventoryItem {
+    string itemCode;
+    string itemName;
+    double cost;
+    double sellingPrice;
+};
+InventoryItem insertItem(int id) {
+    InventoryItem item;
+    cout << "Enter itme name: ";
+    cin >> item.itemName;
+    cout << "Enter item cost: ";
+    cin >> item.cost;
+    item.sellingPrice = item.cost * 1.40;
+    string code = item.itemName.substr(0, 3);
+    for (int i = 0; i < code.length(); i++) {
+        if (code[i] >= 'a' && code[i] <= 'z') {
+            code[i] = code[i] - 32;
+        }
+    }
+    item.itemCode = code + "_" + to_string(id);
+    return item;
+}
+void displayStock(const InventoryItem* items) {
+    for (int i = 0; i < 10; i++) {
+        cout << (items + i)->itemCode << " | "
+             << (items + i)->itemName << " | "
+             << (items + i)->cost << " | "
+             << (items + i)->sellingPrice << endl;
+    }
+}
+int main() {
+    const int size = 10;
+    InventoryItem items[size];
+    for (int i = 0; i < size; i++) {
+        cout << "\nEnter details for itme " << i + 1 << ":" << endl; 
+        items[i] = insertItem(31203 + i);
+    }
+    displayStock(items);
+    return 0;
+}
