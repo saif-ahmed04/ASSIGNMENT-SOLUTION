@@ -1,0 +1,44 @@
+#include <iostream>
+using namespace std;
+int* resizeArray(int inArray[], const int size)
+{
+    int* newArray = new int[size * 2];
+    for (int i = 0; i < size; i++)
+    {
+        newArray[i] = inArray[i];
+    }
+    for (int i = 0; i < size; i++)
+    {
+        newArray[i + size] = inArray[i] * 2;
+    }
+    return newArray;
+}
+int main()
+{
+    int size;
+    cout << "Enter size of the array: ";
+    cin >> size;
+    if (size <= 0)
+    {
+        cout << "Invalid size!" << endl;
+        return 0;
+    }
+    int* arr = new int[size];
+    cout << "Enter elements of array: ";
+    for (int i = 0; i < size; i++)
+    {
+        cin >> arr[i];
+    }
+    int* resizedArray = resizeArray(arr, size);
+    cout << "Resized array: ";
+    for (int i = 0; i < size * 2; i++)
+    {
+        cout << resizedArray[i];
+        if (i < size * 2 - 1)
+            cout << ", ";
+    }
+    cout << endl;
+    delete[] arr;
+    delete[] resizedArray;
+    return 0;
+}
